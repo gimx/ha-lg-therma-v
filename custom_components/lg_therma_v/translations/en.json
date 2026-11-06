@@ -1,0 +1,357 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "A heat pump can be set up in Home Assistant in two different ways.\n\nYou can reach it over the network, which covers a Modbus TCP bridge or an RS485-to-network adapter that speaks Modbus TCP, or over a serial port its RS485 terminals are wired to, which covers ports shared over the network by a serial proxy.\n\nThe heat pump faults with the error CH 03 when nothing asks it for data for five minutes, so keep Home Assistant polling it.",
+        "menu_options": {
+          "serial": "Serial port (Modbus RTU)",
+          "tcp": "Modbus TCP"
+        }
+      },
+      "tcp": {
+        "description": "Set up a heat pump reached over the network, either directly or through a Modbus TCP bridge.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "unit_id": "Modbus unit ID",
+          "meter_unit_id": "Energy meter unit ID",
+          "from_december_2023": "Product from December 2023 or later"
+        },
+        "data_description": {
+          "host": "The hostname or IP address of the device or its Modbus TCP gateway.",
+          "port": "The Modbus TCP port to connect to.",
+          "unit_id": "The heat pump's Modbus unit ID, as set on its control panel under Connectivity > Modbus address.",
+          "meter_unit_id": "The Modbus unit ID of an Eastron SDM120 energy meter on the same line, if the heat pump's electricity use is measured by one. Leave empty if there is none.",
+          "from_december_2023": "Turn this on if the heat pump was made in December 2023 or later. It adds the heat pump's own energy measurement and the compressor modulation, which older products do not have and refuse to answer."
+        }
+      },
+      "serial": {
+        "description": "Set up a heat pump wired to a serial port over RS485.",
+        "data": {
+          "device": "Serial port",
+          "baudrate": "Baud rate",
+          "unit_id": "Modbus unit ID",
+          "meter_unit_id": "Energy meter unit ID",
+          "from_december_2023": "Product from December 2023 or later"
+        },
+        "data_description": {
+          "device": "Select a local serial port or a port shared over the network by a serial proxy.",
+          "baudrate": "The speed of the RS485 bus. The Therma V uses 9600.",
+          "unit_id": "The heat pump's Modbus unit ID, as set on its control panel under Connectivity > Modbus address.",
+          "meter_unit_id": "The Modbus unit ID of an Eastron SDM120 energy meter on the same line, if the heat pump's electricity use is measured by one. Leave empty if there is none.",
+          "from_december_2023": "Turn this on if the heat pump was made in December 2023 or later. It adds the heat pump's own energy measurement and the compressor modulation, which older products do not have and refuse to answer."
+        }
+      },
+      "reconfigure": {
+        "description": "Update where this heat pump is reached, for example after it moved to another address or its RS485 bus was rewired. Moving it between a network and a serial connection keeps this entry and its history.",
+        "menu_options": {
+          "reconfigure_serial": "Serial port (Modbus RTU)",
+          "reconfigure_tcp": "Modbus TCP"
+        }
+      },
+      "reconfigure_tcp": {
+        "description": "Reach this heat pump over the network, either directly or through a Modbus TCP bridge.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "unit_id": "Modbus unit ID",
+          "meter_unit_id": "Energy meter unit ID",
+          "from_december_2023": "Product from December 2023 or later"
+        },
+        "data_description": {
+          "host": "The hostname or IP address of the device or its Modbus TCP gateway.",
+          "port": "The Modbus TCP port to connect to.",
+          "unit_id": "The heat pump's Modbus unit ID, as set on its control panel under Connectivity > Modbus address.",
+          "meter_unit_id": "The Modbus unit ID of an Eastron SDM120 energy meter on the same line, if the heat pump's electricity use is measured by one. Leave empty if there is none.",
+          "from_december_2023": "Turn this on if the heat pump was made in December 2023 or later. It adds the heat pump's own energy measurement and the compressor modulation, which older products do not have and refuse to answer."
+        }
+      },
+      "reconfigure_serial": {
+        "description": "Reach this heat pump over a serial port wired to its RS485 terminals.",
+        "data": {
+          "device": "Serial port",
+          "baudrate": "Baud rate",
+          "unit_id": "Modbus unit ID",
+          "meter_unit_id": "Energy meter unit ID",
+          "from_december_2023": "Product from December 2023 or later"
+        },
+        "data_description": {
+          "device": "Select a local serial port or a port shared over the network by a serial proxy.",
+          "baudrate": "The speed of the RS485 bus. The Therma V uses 9600.",
+          "unit_id": "The heat pump's Modbus unit ID, as set on its control panel under Connectivity > Modbus address.",
+          "meter_unit_id": "The Modbus unit ID of an Eastron SDM120 energy meter on the same line, if the heat pump's electricity use is measured by one. Leave empty if there is none.",
+          "from_december_2023": "Turn this on if the heat pump was made in December 2023 or later. It adds the heat pump's own energy measurement and the compressor modulation, which older products do not have and refuse to answer."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect: {error}",
+      "heat_pump_silent": "The adapter is reachable, but the heat pump behind it did not answer. Check the unit ID, the adapter's serial settings and that Modbus is enabled on the heat pump.",
+      "meter_silent": "The adapter is reachable, but the energy meter behind it did not answer. Check the meter's unit ID and baud rate, or leave the meter empty.",
+      "december_2023_not_supported": "The heat pump refused the registers of products from December 2023 or later. Turn that option off if it is an older product."
+    },
+    "abort": {
+      "already_configured": "Device is already configured",
+      "reconfigure_successful": "Reconfiguration was successful"
+    }
+  },
+  "device": {
+    "meter": {
+      "name": "Energy meter"
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "compressor": {
+        "name": "Compressor"
+      },
+      "defrosting": {
+        "name": "Defrosting"
+      },
+      "dhw_heating": {
+        "name": "DHW heating"
+      },
+      "backup_heater_step_1": {
+        "name": "Backup heater step 1"
+      },
+      "backup_heater_step_2": {
+        "name": "Backup heater step 2"
+      },
+      "dhw_boost_heater": {
+        "name": "DHW boost heater"
+      },
+      "mix_pump": {
+        "name": "Mix pump"
+      },
+      "water_pump": {
+        "name": "Water pump"
+      },
+      "external_water_pump": {
+        "name": "External water pump"
+      },
+      "solar_pump": {
+        "name": "Solar pump"
+      },
+      "dhw_tank_disinfection": {
+        "name": "DHW tank disinfection"
+      },
+      "cooling": {
+        "name": "Cooling"
+      },
+      "silent_mode": {
+        "name": "Silent mode"
+      },
+      "error": {
+        "name": "Error"
+      },
+      "water_flow_too_low": {
+        "name": "Water flow too low"
+      },
+      "emergency_operation_available_space": {
+        "name": "Emergency operation available (space heating/cooling)"
+      },
+      "emergency_operation_available_dhw": {
+        "name": "Emergency operation available (DHW)"
+      }
+    },
+    "climate": {
+      "circuit_1": {
+        "name": "Circuit 1"
+      },
+      "circuit_2": {
+        "name": "Circuit 2"
+      },
+      "dhw": {
+        "name": "DHW"
+      }
+    },
+    "number": {
+      "circuit_1_auto_mode_shift": {
+        "name": "Circuit 1 auto mode shift"
+      },
+      "circuit_2_auto_mode_shift": {
+        "name": "Circuit 2 auto mode shift"
+      },
+      "circuit_1_room_air_temperature": {
+        "name": "Circuit 1 room air temperature input"
+      },
+      "circuit_2_room_air_temperature": {
+        "name": "Circuit 2 room air temperature input"
+      },
+      "compressor_modulation": {
+        "name": "Compressor modulation"
+      }
+    },
+    "select": {
+      "control_method": {
+        "name": "Control method",
+        "state": {
+          "water_outlet_temperature": "Water outlet temperature",
+          "water_inlet_temperature": "Water inlet temperature",
+          "room_air": "Room air"
+        }
+      },
+      "energy_state_input": {
+        "name": "Energy state input",
+        "state": {
+          "not_used": "Not used",
+          "forced_off": "Forced off",
+          "normal_operation": "Normal operation",
+          "on_recommendation": "On recommendation",
+          "on_command": "On command",
+          "on_command_step_2": "On command step 2",
+          "on_recommendation_step_1": "On recommendation step 1",
+          "power_saving": "Power saving",
+          "super_power_saving": "Super power saving"
+        }
+      }
+    },
+    "sensor": {
+      "water_inlet_temperature": {
+        "name": "Water inlet temperature"
+      },
+      "water_outlet_temperature": {
+        "name": "Water outlet temperature"
+      },
+      "backup_heater_outlet_temperature": {
+        "name": "Backup heater outlet temperature"
+      },
+      "dhw_tank_temperature": {
+        "name": "DHW tank temperature"
+      },
+      "solar_collector_temperature": {
+        "name": "Solar collector temperature"
+      },
+      "circuit_1_room_air_temperature": {
+        "name": "Circuit 1 room air temperature"
+      },
+      "circuit_2_flow_temperature": {
+        "name": "Circuit 2 flow temperature"
+      },
+      "circuit_2_room_air_temperature": {
+        "name": "Circuit 2 room air temperature"
+      },
+      "outside_air_temperature": {
+        "name": "Outside air temperature"
+      },
+      "flow_rate": {
+        "name": "Water flow rate"
+      },
+      "operation_cycle": {
+        "name": "Operation cycle",
+        "state": {
+          "standby": "Standby",
+          "cooling": "Cooling",
+          "heating": "Heating"
+        }
+      },
+      "energy_state": {
+        "name": "Energy state",
+        "state": {
+          "not_used": "Not used",
+          "forced_off": "Forced off",
+          "normal_operation": "Normal operation",
+          "on_recommendation": "On recommendation",
+          "on_command": "On command",
+          "on_command_step_2": "On command step 2",
+          "on_recommendation_step_1": "On recommendation step 1",
+          "power_saving": "Power saving",
+          "super_power_saving": "Super power saving"
+        }
+      },
+      "error_code": {
+        "name": "Error code"
+      },
+      "water_pressure": {
+        "name": "Water pressure"
+      },
+      "pipe_in_temperature": {
+        "name": "Pipe in temperature"
+      },
+      "pipe_out_temperature": {
+        "name": "Pipe out temperature"
+      },
+      "suction_temperature": {
+        "name": "Suction temperature"
+      },
+      "discharge_temperature": {
+        "name": "Discharge temperature"
+      },
+      "heat_exchanger_temperature": {
+        "name": "Heat exchanger temperature"
+      },
+      "evaporator_outlet_temperature": {
+        "name": "Evaporator outlet temperature"
+      },
+      "high_pressure": {
+        "name": "High pressure"
+      },
+      "low_pressure": {
+        "name": "Low pressure"
+      },
+      "compressor_frequency": {
+        "name": "Compressor frequency"
+      },
+      "energy_instantaneous_total": {
+        "name": "Total energy (instantaneous)"
+      },
+      "energy_accumulative_total": {
+        "name": "Total energy (accumulated)"
+      },
+      "energy_instantaneous_heat": {
+        "name": "Heating energy (instantaneous)"
+      },
+      "energy_accumulative_cool": {
+        "name": "Cooling energy (accumulated)"
+      },
+      "energy_accumulative_dhw": {
+        "name": "DHW energy (accumulated)"
+      },
+      "meter_voltage": {
+        "name": "Voltage"
+      },
+      "meter_power": {
+        "name": "Power"
+      },
+      "meter_energy": {
+        "name": "Energy"
+      }
+    },
+    "switch": {
+      "heating_cooling_enabled": {
+        "name": "Heating/cooling"
+      },
+      "dhw_enabled": {
+        "name": "DHW"
+      },
+      "silent_mode": {
+        "name": "Silent mode"
+      },
+      "emergency_stop": {
+        "name": "Emergency stop"
+      }
+    },
+    "button": {
+      "trigger_dhw_disinfection": {
+        "name": "Trigger DHW disinfection"
+      },
+      "trigger_emergency_operation": {
+        "name": "Trigger emergency operation"
+      }
+    }
+  },
+  "exceptions": {
+    "modbus_error": {
+      "message": "Error communicating with the heat pump."
+    },
+    "no_component_answered": {
+      "message": "No component answered."
+    },
+    "write_failed": {
+      "message": "Failed to write to the heat pump."
+    },
+    "invalid_compressor_modulation": {
+      "message": "The compressor modulation is 0 (not used) or {minimum} to {maximum}."
+    }
+  }
+}

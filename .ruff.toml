@@ -1,0 +1,53 @@
+# The contents of this file is based on https://github.com/home-assistant/core/blob/dev/pyproject.toml
+
+target-version = "py314"
+
+# The device library is vendored from lg-therma-v-modbus, which lints it to its
+# own rules; scripts/vendor_library copies it in unchanged.
+extend-exclude = [
+    "custom_components/lg_therma_v/lg_therma_v_modbus",
+]
+
+[lint]
+select = [
+    "ALL",
+]
+
+ignore = [
+    "ANN401", # Dynamically typed expressions (typing.Any) are disallowed
+    "ARG001", # Unused function argument: Home Assistant's platform setup signatures
+    "ARG002", # Unused method argument: Home Assistant's entity method signatures
+    "CPY001", # Missing copyright notice at top of file
+    "D203", # no-blank-line-before-class (incompatible with formatter)
+    "D212", # multi-line-summary-first-line (incompatible with formatter)
+    "EM101", # Exception must not use a string literal
+    "FBT001", # Boolean-typed positional argument: the switch's turn on/off helper
+    "FBT003", # Boolean positional value in function call
+    "COM812", # incompatible with formatter
+    "ISC001", # incompatible with formatter
+    "PLR0913", # Too many arguments in function definition
+    "PLR0917", # Too many positional arguments in function definition
+    "TC001", # Move application import into a type-checking block
+    "TC002", # Move third-party import into a type-checking block
+    "TC003", # Move standard library import into a type-checking block
+]
+
+[lint.per-file-ignores]
+"tests/*" = [
+    "ANN", # Tests do not need annotations
+    "ARG", # Fixtures are requested by name, not used
+    "D", # A test's name is its documentation
+    "FBT", # Booleans are the point of parametrizing a switch
+    "PLR2004", # Magic values are the expected values of a test
+    "S101", # asserts are what tests are made of
+    "SLF001", # Tests reach into what they check
+]
+
+[lint.flake8-pytest-style]
+fixture-parentheses = false
+
+[lint.pyupgrade]
+keep-runtime-typing = true
+
+[lint.mccabe]
+max-complexity = 25

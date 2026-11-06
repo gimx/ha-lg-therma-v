@@ -1,0 +1,79 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "compressor": {
+        "default": "mdi:hvac"
+      },
+      "defrosting": {
+        "default": "mdi:snowflake-melt"
+      },
+      "dhw_heating": {
+        "default": "mdi:water-boiler"
+      },
+      "error": {
+        "default": "mdi:alert-circle-outline"
+      },
+      "water_flow_too_low": {
+        "default": "mdi:water-alert-outline"
+      }
+    },
+    "button": {
+      "trigger_dhw_disinfection": {
+        "default": "mdi:biohazard"
+      },
+      "trigger_emergency_operation": {
+        "default": "mdi:alert-octagon-outline"
+      }
+    },
+    "number": {
+      "circuit_1_auto_mode_shift": {
+        "default": "mdi:thermometer-plus"
+      },
+      "circuit_2_auto_mode_shift": {
+        "default": "mdi:thermometer-plus"
+      },
+      "compressor_modulation": {
+        "default": "mdi:gauge"
+      }
+    },
+    "select": {
+      "control_method": {
+        "default": "mdi:thermometer-lines"
+      },
+      "energy_state_input": {
+        "default": "mdi:transmission-tower"
+      }
+    },
+    "sensor": {
+      "flow_rate": {
+        "default": "mdi:water-pump"
+      },
+      "energy_state": {
+        "default": "mdi:transmission-tower"
+      },
+      "error_code": {
+        "default": "mdi:alert-circle-outline"
+      },
+      "operation_cycle": {
+        "default": "mdi:heat-pump"
+      },
+      "compressor_frequency": {
+        "default": "mdi:sine-wave"
+      }
+    },
+    "switch": {
+      "silent_mode": {
+        "default": "mdi:volume-off"
+      },
+      "dhw_enabled": {
+        "default": "mdi:water-boiler"
+      },
+      "emergency_stop": {
+        "default": "mdi:alert-octagon"
+      },
+      "heating_cooling_enabled": {
+        "default": "mdi:radiator"
+      }
+    }
+  }
+}

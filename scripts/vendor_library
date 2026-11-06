@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Vendor the lg-therma-v-modbus device library into the integration.
+#
+# Usage: scripts/vendor_library <version | path/to/src/lg_therma_v_modbus>
+#
+#   scripts/vendor_library 0.1.0                        # from PyPI
+#   scripts/vendor_library ../lg-therma-v-modbus/src/lg_therma_v_modbus
+#
+# Home Assistant core installs the library from PyPI. A HACS integration has
+# no such step it can rely on, so it carries a copy, unchanged, next to its own
+# code and imports it relatively.
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+source="${1:?usage: scripts/vendor_library <version | path/to/src/lg_therma_v_modbus>}"
+target="custom_components/lg_therma_v/lg_therma_v_modbus"
+work="$(mktemp -d)"
+trap 'rm -rf "$work"' EXIT
+
+if [[ -d "$source" ]]; then
+    cp -r "$source" "$work/lg_therma_v_modbus"
+else
+    python3 -m pip download --no-deps --only-binary=:all: --dest "$work" "lg-therma-v-modbus==${source}"
+    python3 -m zipfile -e "$work"/lg_therma_v_modbus-*.whl "$work/wheel"
+    cp -r "$work/wheel/lg_therma_v_modbus" "$work/lg_therma_v_modbus"
+fi
+
+find "$work/lg_therma_v_modbus" -name __pycache__ -prune -exec rm -rf {} +
+rm -rf "$target"
+cp -r "$work/lg_therma_v_modbus" "$target"
+echo "Vendored $source into $target"

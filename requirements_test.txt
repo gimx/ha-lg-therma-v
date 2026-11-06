@@ -1,0 +1,10 @@
+-r requirements_common.txt
+# Pins homeassistant to the version hacs.json names.
+pytest-homeassistant-custom-component==0.13.375
+# What Home Assistant installs for the modbus and usb integrations at runtime,
+# which a test run has to have beforehand.
+aiousbwatcher==1.1.2
+modbus-connection[tmodbus]==4.12.7
+pymodbus==3.13.1
+pyserial==3.5
+tmodbus==1.1.0
