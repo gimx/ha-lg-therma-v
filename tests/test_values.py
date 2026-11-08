@@ -44,7 +44,7 @@ from pytest_homeassistant_custom_component.common import MockConfigEntry
         ("binary_sensor.lg_therma_v_backup_heater_step_1", "on"),
         ("binary_sensor.lg_therma_v_mix_pump", "on"),
         ("binary_sensor.lg_therma_v_error", "off"),
-        ("binary_sensor.lg_therma_v_water_flow_too_low", "off"),
+        ("binary_sensor.lg_therma_v_water_flow", "off"),
         ("switch.lg_therma_v_heating_cooling", "on"),
         ("switch.lg_therma_v_silent_mode", "off"),
         ("switch.lg_therma_v_emergency_stop", "off"),

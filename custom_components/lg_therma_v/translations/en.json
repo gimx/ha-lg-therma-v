@@ -144,8 +144,8 @@
       "error": {
         "name": "Error"
       },
-      "water_flow_too_low": {
-        "name": "Water flow too low"
+      "water_flow": {
+        "name": "Water flow"
       },
       "emergency_operation_available_space": {
         "name": "Emergency operation available (space heating/cooling)"

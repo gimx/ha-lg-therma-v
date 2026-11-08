@@ -62,6 +62,7 @@ BINARY_SENSOR_DESCRIPTIONS: tuple[LgThermaVBinarySensorEntityDescription, ...] =
     _running("backup_heater_step_2", enabled=False),
     _running("dhw_boost_heater", enabled=False),
     _running("mix_pump", enabled=False),
+    _running("water_flow"),
     _running("water_pump", enabled=False),
     _running("external_water_pump", enabled=False),
     _running("solar_pump", enabled=False),
@@ -69,7 +70,6 @@ BINARY_SENSOR_DESCRIPTIONS: tuple[LgThermaVBinarySensorEntityDescription, ...] =
     _running("cooling", enabled=False),
     _running("silent_mode", enabled=False),
     _diagnostic("error", BinarySensorDeviceClass.PROBLEM, enabled=True),
-    _diagnostic("water_flow_too_low", BinarySensorDeviceClass.PROBLEM, enabled=True),
     _diagnostic("emergency_operation_available_space"),
     _diagnostic("emergency_operation_available_dhw"),
 )

@@ -13,8 +13,8 @@
       "error": {
         "default": "mdi:alert-circle-outline"
       },
-      "water_flow_too_low": {
-        "default": "mdi:water-alert-outline"
+      "water_flow": {
+        "default": "mdi:water-pump"
       }
     },
     "button": {

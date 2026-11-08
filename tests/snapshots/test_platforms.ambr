@@ -762,7 +762,7 @@
     'state': 'off',
   })
 # ---
-# name: test_platform_entities[binary_sensor][binary_sensor.lg_therma_v_water_flow_too_low-entry]
+# name: test_platform_entities[binary_sensor][binary_sensor.lg_therma_v_water_flow-entry]
   EntityRegistryEntrySnapshot({
     'aliases': list([
       None,
@@ -775,8 +775,8 @@
     'device_id': <ANY>,
     'disabled_by': None,
     'domain': 'binary_sensor',
-    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
-    'entity_id': 'binary_sensor.lg_therma_v_water_flow_too_low',
+    'entity_category': None,
+    'entity_id': 'binary_sensor.lg_therma_v_water_flow',
     'has_entity_name': True,
     'hidden_by': None,
     'icon': None,
@@ -784,29 +784,29 @@
     'labels': set({
     }),
     'name': None,
-    'object_id_base': 'Water flow too low',
+    'object_id_base': 'Water flow',
     'options': dict({
     }),
-    'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
+    'original_device_class': <BinarySensorDeviceClass.RUNNING: 'running'>,
     'original_icon': None,
-    'original_name': 'Water flow too low',
+    'original_name': 'Water flow',
     'platform': 'lg_therma_v',
     'previous_unique_id': None,
     'suggested_object_id': None,
     'supported_features': 0,
-    'translation_key': 'water_flow_too_low',
-    'unique_id': '01JLGTHERMAV0000000000000_water_flow_too_low',
+    'translation_key': 'water_flow',
+    'unique_id': '01JLGTHERMAV0000000000000_water_flow',
     'unit_of_measurement': None,
   })
 # ---
-# name: test_platform_entities[binary_sensor][binary_sensor.lg_therma_v_water_flow_too_low-state]
+# name: test_platform_entities[binary_sensor][binary_sensor.lg_therma_v_water_flow-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'problem',
-      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'LG Therma V Water flow too low',
+      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'running',
+      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'LG Therma V Water flow',
     }),
     'context': <ANY>,
-    'entity_id': 'binary_sensor.lg_therma_v_water_flow_too_low',
+    'entity_id': 'binary_sensor.lg_therma_v_water_flow',
     'last_changed': <ANY>,
     'last_reported': <ANY>,
     'last_updated': <ANY>,

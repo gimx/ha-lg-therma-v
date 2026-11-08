@@ -8,7 +8,9 @@ from modbus_connection.model import Component, discrete_input
 class Status(Component):
     """Pumps, compressor, heaters and alarms, one bit each."""
 
-    water_flow_too_low = discrete_input(0)  # 10001: 0 flow rate ok, 1 too low
+    # 10001: LG documents "0 flow rate ok, 1 too low", but firmware 3.0.6.5 sets it
+    # exactly while water is flowing (pump running) and clears it when the pump stops
+    water_flow = discrete_input(0)  # 10001: 1 water flowing, 0 no flow
     water_pump = discrete_input(1)  # 10002
     external_water_pump = discrete_input(2)  # 10003
     compressor = discrete_input(3)  # 10004

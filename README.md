@@ -68,7 +68,7 @@ you want from the entity's settings.
 | Climate | Circuit 1, Circuit 2 and DHW: current and target temperature and, for the two circuits, the heat pump's operation mode (cool, heat, auto) | |
 | Sensor | Water inlet, circuit 1 room air, circuit 2 flow and outside air temperature, water flow rate, operation cycle, energy state, error code | Water outlet, backup heater outlet, DHW tank, solar collector and circuit 2 room air temperature, water pressure, the refrigerant circuit (pipe in/out, suction, discharge, heat exchanger and evaporator outlet temperature, high and low pressure, compressor frequency) |
 | Sensor, December 2023 or later | | Total, heating, cooling and DHW energy, instantaneous and accumulated |
-| Binary sensor | Compressor, defrosting, DHW heating, backup heater step 1, error, water flow too low | Backup heater step 2, DHW boost heater, pumps, DHW tank disinfection, cooling, silent mode, emergency operation available |
+| Binary sensor | Compressor, defrosting, DHW heating, backup heater step 1, water flow, error | Backup heater step 2, DHW boost heater, pumps, DHW tank disinfection, cooling, silent mode, emergency operation available |
 | Switch | Heating/cooling, DHW, silent mode | Emergency stop |
 | Button | Trigger DHW disinfection | Trigger emergency operation |
 | Number | Circuit 1 auto mode shift | Circuit 2 auto mode shift, the room air temperature inputs of both circuits |
