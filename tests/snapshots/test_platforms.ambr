@@ -1083,7 +1083,7 @@
 # name: test_platform_entities[climate][climate.lg_therma_v_circuit_2-state]
   StateSnapshot({
     'attributes': ReadOnlyDict({
-      <ClimateEntityStateAttribute.CURRENT_TEMPERATURE: 'current_temperature'>: 18.7,
+      <ClimateEntityStateAttribute.CURRENT_TEMPERATURE: 'current_temperature'>: 33.1,
       <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'LG Therma V Circuit 2',
       <ClimateEntityCapabilityAttribute.HVAC_MODES: 'hvac_modes'>: list([
         <HVACMode.COOL: 'cool'>,

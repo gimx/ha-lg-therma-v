@@ -20,7 +20,7 @@ from modbus_connection import ModbusError
 from .const import DOMAIN
 from .coordinator import LgThermaVConfigEntry
 from .entity import LgThermaVEntity, LgThermaVEntityDescription
-from .lg_therma_v_modbus import OperationMode, ThermaV
+from .lg_therma_v_modbus import ControlMethod, OperationMode, ThermaV
 
 PARALLEL_UPDATES = 1
 
@@ -30,6 +30,23 @@ _HVAC_MODES = {
     OperationMode.AUTO: HVACMode.AUTO,
 }
 _OPERATION_MODES = {mode: operation for operation, mode in _HVAC_MODES.items()}
+
+
+def _by_control_method(
+    readings: dict[ControlMethod, Callable[[ThermaV], float | None]],
+) -> Callable[[ThermaV], float | None]:
+    """Measure what the heat pump holds the circuit's target against."""
+    # The control method (40002) applies to both circuits, so the temperature
+    # a circuit's target is compared with follows it. Until the method is
+    # known, the water outlet temperature stands in, the heat pump's default.
+
+    def current_temperature(device: ThermaV) -> float | None:
+        method = device.settings.control_method
+        if method is None:
+            method = ControlMethod.WATER_OUTLET_TEMPERATURE
+        return readings[method](device)
+
+    return current_temperature
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -53,7 +70,19 @@ CLIMATE_DESCRIPTIONS: tuple[LgThermaVClimateEntityDescription, ...] = (
         key="circuit_1",
         component="settings",
         translation_key="circuit_1",
-        current_temperature_fn=lambda device: device.readings.water_outlet_temperature,
+        current_temperature_fn=_by_control_method(
+            {
+                ControlMethod.WATER_OUTLET_TEMPERATURE: lambda device: (
+                    device.readings.water_outlet_temperature
+                ),
+                ControlMethod.WATER_INLET_TEMPERATURE: lambda device: (
+                    device.readings.water_inlet_temperature
+                ),
+                ControlMethod.ROOM_AIR: lambda device: (
+                    device.readings.circuit_1_room_air_temperature
+                ),
+            }
+        ),
         target_temperature_fn=lambda device: (
             device.settings.circuit_1_target_temperature
         ),
@@ -65,8 +94,20 @@ CLIMATE_DESCRIPTIONS: tuple[LgThermaVClimateEntityDescription, ...] = (
         key="circuit_2",
         component="settings",
         translation_key="circuit_2",
-        current_temperature_fn=lambda device: (
-            device.readings.circuit_2_room_air_temperature
+        # Circuit 2 has one water sensor of its own, its flow temperature,
+        # so it stands for both water control methods.
+        current_temperature_fn=_by_control_method(
+            {
+                ControlMethod.WATER_OUTLET_TEMPERATURE: lambda device: (
+                    device.readings.circuit_2_flow_temperature
+                ),
+                ControlMethod.WATER_INLET_TEMPERATURE: lambda device: (
+                    device.readings.circuit_2_flow_temperature
+                ),
+                ControlMethod.ROOM_AIR: lambda device: (
+                    device.readings.circuit_2_room_air_temperature
+                ),
+            }
         ),
         target_temperature_fn=lambda device: (
             device.settings.circuit_2_target_temperature

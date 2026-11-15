@@ -75,13 +75,44 @@ async def test_climate_temperatures(hass: HomeAssistant) -> None:
     assert circuit_1.attributes["current_temperature"] == 35.2
     assert circuit_1.attributes["temperature"] == 40.0
     assert circuit_2 is not None
-    assert circuit_2.attributes["current_temperature"] == 18.7
+    assert circuit_2.attributes["current_temperature"] == 33.1
     assert circuit_2.attributes["temperature"] == 35.0
     assert dhw is not None
     assert dhw.attributes["current_temperature"] == 47.8
     assert dhw.attributes["temperature"] == 48.0
     assert dhw.attributes["min_temp"] == 40
     assert dhw.attributes["max_temp"] == 55
+
+
+@pytest.mark.parametrize(
+    ("control_method", "circuit_1", "circuit_2"),
+    [
+        (0, 35.2, 33.1),  # water outlet: outlet, circuit 2 flow
+        (1, 30.1, 33.1),  # water inlet: inlet, circuit 2 flow
+        (2, 21.5, 18.7),  # room air: each circuit's room air
+    ],
+)
+async def test_climate_follows_the_control_method(
+    hass: HomeAssistant,
+    mock_config_entry: MockConfigEntry,
+    mock_connection,
+    mock_get_unit: None,
+    control_method: int,
+    circuit_1: float,
+    circuit_2: float,
+) -> None:
+    """Test a circuit shows the temperature its control method holds it to."""
+    mock_connection.for_unit(1).holding[1] = control_method
+    mock_config_entry.add_to_hass(hass)
+    await hass.config_entries.async_setup(mock_config_entry.entry_id)
+    await hass.async_block_till_done()
+
+    def current(entity_id: str) -> float:
+        return hass.states.get(entity_id).attributes["current_temperature"]
+
+    assert current("climate.lg_therma_v_circuit_1") == circuit_1
+    assert current("climate.lg_therma_v_circuit_2") == circuit_2
+    assert current("climate.lg_therma_v_dhw") == 47.8
 
 
 @pytest.mark.parametrize(
